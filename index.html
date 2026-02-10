@@ -1,11 +1,126 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>My Page</title>
-    <script>
-        const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7q0_YdfVdN8mODE-matdeo_xBFmo65y8OJ-os2GVKNy3xEW5r_hDLylLIU9LEi_J8HXx6XsQojJPb/pub?gid=0&single=true&output=csv";
-    </script>
+<meta charset="UTF-8">
+<title>Petición Ciudadana</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #1e88e5;
+    color: white;
+    padding: 30px 15px;
+    text-align: center;
+}
+
+section {
+    max-width: 800px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+.contador {
+    background: white;
+    padding: 30px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.contador h1 {
+    font-size: 48px;
+    margin: 0;
+    color: #1e88e5;
+}
+
+button {
+    background: #43a047;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #388e3c;
+}
+
+.aviso {
+    font-size: 14px;
+    color: #555;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    font-size: 13px;
+    color: #777;
+}
+</style>
 </head>
+
 <body>
-    <h1>Welcome to my page</h1>
+
+<header>
+    <h2>Petición Ciudadana</h2>
+    <p>Remodelación del Centro Deportivo</p>
+</header>
+
+<section>
+
+<div class="contador">
+    <h1 id="numero">Cargando...</h1>
+    <p>100 ciudadanos ya apoyaron esta petición</p>
+    <br>
+    <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSefASwh-yNCzk585_s7upY5qvBYn8XBCZ8cAK38E3wylPkFuQ/viewform?usp=sharing&ouid=100030772632971886104', '_blank')">
+         Firmar
+    </button>
+</div>
+
+<div class="aviso">
+<strong>Aviso de privacidad</strong><br><br>
+Los datos personales recabados (nombre, teléfono, correo, dirección y CURP)
+serán utilizados exclusivamente para respaldar esta petición ciudadana y
+serán entregados únicamente a las autoridades competentes.
+No serán usados con fines comerciales ni compartidos con terceros.
+</div>
+
+</section>
+
+<footer>
+Petición ciudadana sin fines de lucro
+</footer>
+
+<script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7q0_YdfVdN8mODE-matdeo_xBFmo65y8OJ-os2GVKNy3xEW5r_hDLylLIU9LEi_J8HXx6XsQojJPb/pub?gid=0&single=true&output=csv";
+
+function actualizarContador() {
+    fetch(sheetURL)
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById("numero").innerText = data.trim();
+        })
+        .catch(() => {
+            document.getElementById("numero").innerText = "Error";
+        });
+}
+
+actualizarContador();
+setInterval(actualizarContador, 10000); // cada 10 segundos
+</script>
+
 </body>
 </html>
